@@ -41,8 +41,6 @@ void dfs(map<char, vector<char>> graph, char startVert)
 			}
 		}
 
-		cout << nextToVisit << endl;
-
 	}
 
 
@@ -58,8 +56,7 @@ int main()
 {
 
 	ifstream graphFile;
-	graphFile.open("test1.txt");
-
+	graphFile.open("graph.txt");
 
 	int vertices, edges;
 
