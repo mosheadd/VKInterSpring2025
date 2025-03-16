@@ -3,9 +3,44 @@
 #include "string"
 #include "map"
 #include "vector"
+#include "stack"
+
 
 
 using namespace std;
+
+
+void dfs(map<char, vector<char>> graph, char startVert)
+{
+
+	map<char, bool> visited;
+	visited[startVert] = true;
+
+	stack<char> visiting;
+
+	visiting.push(startVert);
+
+	while (visiting.size() != 0)
+	{
+
+		char nextToVisit = visiting.top();
+		visiting.pop();
+
+		for (char edg : graph[nextToVisit])
+		{
+			if (!visited[edg])
+			{
+				visiting.push(edg);
+				visited[edg] = true;
+			}
+		}
+
+		cout << nextToVisit << endl;
+
+	}
+
+}
+
 
 int main()
 {
@@ -47,6 +82,8 @@ int main()
 	char startingVert = curr_str[0];
 
 	graphFile.close();
+
+	dfs(graph, startingVert);
 
 	return 0;
 
