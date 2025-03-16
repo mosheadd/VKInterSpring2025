@@ -4,6 +4,7 @@
 #include "map"
 #include "vector"
 #include "stack"
+#include "queue"
 
 
 
@@ -13,30 +14,41 @@ using namespace std;
 void dfs(map<char, vector<char>> graph, char startVert)
 {
 
-	map<char, bool> visited;
-	visited[startVert] = true;
+	map<char, pair<bool, int>> visited;
 
-	stack<char> visiting;
+	visited[startVert].first = true;
+	visited[startVert].second = 0;
+
+	queue<char> visiting;
 
 	visiting.push(startVert);
 
 	while (visiting.size() != 0)
 	{
 
-		char nextToVisit = visiting.top();
+		char nextToVisit = visiting.front();
 		visiting.pop();
+
+		int distanceToCurrent = visited[nextToVisit].second;
 
 		for (char edg : graph[nextToVisit])
 		{
-			if (!visited[edg])
+			if (!visited[edg].first)
 			{
 				visiting.push(edg);
-				visited[edg] = true;
+				visited[edg].first = true;
+				visited[edg].second = distanceToCurrent + 1;
 			}
 		}
 
 		cout << nextToVisit << endl;
 
+	}
+
+
+	for (auto edg : visited)
+	{
+		cout << edg.first << " " << edg.second.second << endl;
 	}
 
 }
@@ -46,7 +58,7 @@ int main()
 {
 
 	ifstream graphFile;
-	graphFile.open("graph.txt");
+	graphFile.open("test1.txt");
 
 
 	int vertices, edges;
@@ -84,6 +96,7 @@ int main()
 	graphFile.close();
 
 	dfs(graph, startingVert);
+
 
 	return 0;
 
