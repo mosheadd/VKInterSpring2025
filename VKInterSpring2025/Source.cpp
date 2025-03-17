@@ -3,7 +3,6 @@
 #include "string"
 #include "map"
 #include "vector"
-#include "stack"
 #include "queue"
 
 
@@ -11,8 +10,10 @@
 using namespace std;
 
 
-void dfs(map<int, vector<int>> graph, int startVert)
+void dfs(map<int, vector<int>>& graph, int startVert)
 {
+
+	cout << "dfs alg begins...\n";
 
 	map<int, pair<bool, int>> visited;
 
@@ -43,19 +44,26 @@ void dfs(map<int, vector<int>> graph, int startVert)
 
 	}
 
+	cout << "dfs alg ends...\nOutput answer:\n";
+
 	for (auto edg : visited)
 	{
-		cout << edg.first << " " << edg.second.second << endl;
+		cout << edg.second.second << endl;
 	}
 
 }
 
 
+
 int main()
 {
 
+	string path;
+	cout << "Enter path to the file: ";
+	cin >> path;
+
 	ifstream graphFile;
-	graphFile.open("graph.txt");
+	graphFile.open(path);
 
 	int vertices, edges;
 
@@ -65,9 +73,6 @@ int main()
 
 	vertices = stoi(verticesSTR);
 	edges = stoi(edgesSTR);
-
-	cout << "Vertices of this grpah: " << vertices << endl;
-	cout << "Edges of this grpah: " << edges << endl;
 
 	map<int, vector<int>> graph;
 
@@ -91,6 +96,9 @@ int main()
 		int ivertFirst = stoi(vertFirst);
 		int ivertSecond = stoi(vertSecond);
 
+		if (ivertFirst == ivertSecond)
+			continue;
+
 		graph[ivertFirst].push_back(ivertSecond);
 		graph[ivertSecond].push_back(ivertFirst);
 
@@ -102,7 +110,6 @@ int main()
 	graphFile.close();
 
 	dfs(graph, stoi(curr_str));
-
 
 	return 0;
 
