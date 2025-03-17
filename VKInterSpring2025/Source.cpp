@@ -11,27 +11,27 @@
 using namespace std;
 
 
-void dfs(map<char, vector<char>> graph, char startVert)
+void dfs(map<int, vector<int>> graph, int startVert)
 {
 
-	map<char, pair<bool, int>> visited;
+	map<int, pair<bool, int>> visited;
 
 	visited[startVert].first = true;
 	visited[startVert].second = 0;
 
-	queue<char> visiting;
+	queue<int> visiting;
 
 	visiting.push(startVert);
 
 	while (visiting.size() != 0)
 	{
 
-		char nextToVisit = visiting.front();
+		int nextToVisit = visiting.front();
 		visiting.pop();
 
 		int distanceToCurrent = visited[nextToVisit].second;
 
-		for (char edg : graph[nextToVisit])
+		for (int edg : graph[nextToVisit])
 		{
 			if (!visited[edg].first)
 			{
@@ -42,7 +42,6 @@ void dfs(map<char, vector<char>> graph, char startVert)
 		}
 
 	}
-
 
 	for (auto edg : visited)
 	{
@@ -70,29 +69,39 @@ int main()
 	cout << "Vertices of this grpah: " << vertices << endl;
 	cout << "Edges of this grpah: " << edges << endl;
 
-
-	map<char, vector<char>> graph;
+	map<int, vector<int>> graph;
 
 	string curr_str;
 	for(int i=0;i<edges;i++)
 	{
 
 		getline(graphFile, curr_str);
+		size_t curr_str_size = curr_str.size();
 
-		int vertFirst = curr_str[0];
-		int vertSecond = curr_str[2];
+		int j = 0;
 
-		graph[vertFirst].push_back(vertSecond);
-		graph[vertSecond].push_back(vertFirst);
+		string vertFirst = "";
+		for (;curr_str[j] != ' '; j++)
+			vertFirst += curr_str[j];
+
+		string vertSecond = "";
+		for (j++;j< curr_str_size; j++)
+			vertSecond += curr_str[j];
+
+		int ivertFirst = stoi(vertFirst);
+		int ivertSecond = stoi(vertSecond);
+
+		graph[ivertFirst].push_back(ivertSecond);
+		graph[ivertSecond].push_back(ivertFirst);
+
 
 	}
 
 	getline(graphFile, curr_str);
-	char startingVert = curr_str[0];
 
 	graphFile.close();
 
-	dfs(graph, startingVert);
+	dfs(graph, stoi(curr_str));
 
 
 	return 0;
