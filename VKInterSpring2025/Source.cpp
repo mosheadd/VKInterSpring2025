@@ -54,13 +54,8 @@ void dfs(map<int, vector<int>>& graph, int startVert)
 }
 
 
-
-int main()
+void processFile(string path)
 {
-
-	string path;
-	cout << "Enter path to the file: ";
-	cin >> path;
 
 	ifstream graphFile;
 	graphFile.open(path);
@@ -77,7 +72,7 @@ int main()
 	map<int, vector<int>> graph;
 
 	string curr_str;
-	for(int i=0;i<edges;i++)
+	for (int i = 0; i < edges; i++)
 	{
 
 		getline(graphFile, curr_str);
@@ -86,11 +81,11 @@ int main()
 		int j = 0;
 
 		string vertFirst = "";
-		for (;curr_str[j] != ' '; j++)
+		for (; curr_str[j] != ' '; j++)
 			vertFirst += curr_str[j];
 
 		string vertSecond = "";
-		for (j++;j< curr_str_size; j++)
+		for (j++; j < curr_str_size; j++)
 			vertSecond += curr_str[j];
 
 		int ivertFirst = stoi(vertFirst);
@@ -110,6 +105,18 @@ int main()
 	graphFile.close();
 
 	dfs(graph, stoi(curr_str));
+
+}
+
+
+int main()
+{
+
+	string path;
+	cout << "Enter path to the file: ";
+	cin >> path;
+
+	processFile(path);
 
 	return 0;
 
