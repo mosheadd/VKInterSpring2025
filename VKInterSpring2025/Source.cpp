@@ -10,18 +10,18 @@
 using namespace std;
 
 
-void dfs(map<int, vector<int>>& graph, int startVert)
+void bfs(map<int, vector<int>>& graph, int startVert, int vertices)
 {
 
 	cout << "dfs alg begins...\n";
 
-	map<int, pair<bool, int>> visited;
+	vector<bool> vvisited(vertices, false);
+	vector<int> distance(vertices, -1);
 
-	visited[startVert].first = true;
-	visited[startVert].second = 0;
+	vvisited[startVert] = true;
+	distance[startVert] = 0;
 
 	queue<int> visiting;
-
 	visiting.push(startVert);
 
 	while (visiting.size() != 0)
@@ -30,15 +30,15 @@ void dfs(map<int, vector<int>>& graph, int startVert)
 		int nextToVisit = visiting.front();
 		visiting.pop();
 
-		int distanceToCurrent = visited[nextToVisit].second;
+		int distanceToCurrent = distance[nextToVisit];
 
 		for (int edg : graph[nextToVisit])
 		{
-			if (!visited[edg].first)
+			if (!vvisited[edg])
 			{
 				visiting.push(edg);
-				visited[edg].first = true;
-				visited[edg].second = distanceToCurrent + 1;
+				vvisited[edg] = true;
+				distance[edg] = distanceToCurrent + 1;
 			}
 		}
 
@@ -46,9 +46,9 @@ void dfs(map<int, vector<int>>& graph, int startVert)
 
 	cout << "dfs alg ends...\nOutput answer:\n";
 
-	for (auto edg : visited)
+	for (int edg : distance)
 	{
-		cout << edg.second.second << endl;
+		cout << edg << endl;
 	}
 
 }
@@ -104,7 +104,7 @@ void processFile(string path)
 
 	graphFile.close();
 
-	dfs(graph, stoi(curr_str));
+	bfs(graph, stoi(curr_str), vertices);
 
 }
 
