@@ -13,12 +13,12 @@ using namespace std;
 void bfs(map<int, vector<int>>& graph, int startVert, int vertices)
 {
 
-	cout << "dfs alg begins...\n";
+	cout << "bfs alg begins...\n";
 
-	vector<bool> vvisited(vertices, false);
+	vector<bool> visited(vertices, false);
 	vector<int> distance(vertices, -1);
 
-	vvisited[startVert] = true;
+	visited[startVert] = true;
 	distance[startVert] = 0;
 
 	queue<int> visiting;
@@ -34,17 +34,17 @@ void bfs(map<int, vector<int>>& graph, int startVert, int vertices)
 
 		for (int edg : graph[nextToVisit])
 		{
-			if (!vvisited[edg])
+			if (!visited[edg])
 			{
 				visiting.push(edg);
-				vvisited[edg] = true;
+				visited[edg] = true;
 				distance[edg] = distanceToCurrent + 1;
 			}
 		}
 
 	}
 
-	cout << "dfs alg ends...\nOutput answer:\n";
+	cout << "bfs alg ends...\nOutput answer : \n";
 
 	for (int edg : distance)
 	{
