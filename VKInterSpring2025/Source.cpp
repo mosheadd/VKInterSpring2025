@@ -60,6 +60,9 @@ void processFile(string path)
 	ifstream graphFile;
 	graphFile.open(path);
 
+	if (!graphFile.is_open())
+		throw "File not found!";
+
 	int vertices, edges;
 
 	string verticesSTR, edgesSTR;
@@ -104,7 +107,14 @@ void processFile(string path)
 
 	graphFile.close();
 
-	bfs(graph, stoi(curr_str), vertices);
+	try
+	{
+		bfs(graph, stoi(curr_str), vertices);
+	}
+	catch (...)
+	{
+		cout << "An unidentified error happened!\n";
+	}
 
 }
 
@@ -116,7 +126,19 @@ int main()
 	cout << "Enter path to the file: ";
 	cin >> path;
 
-	processFile(path);
+	try
+	{
+		processFile(path);
+	}
+	catch (const char* error_message)
+	{
+		cout << error_message << endl;
+	}
+	catch (...)
+	{
+		cout << "An unidentified error happened!\nMost likely the file doesnt match the template.\n";
+	}
+
 
 	return 0;
 
