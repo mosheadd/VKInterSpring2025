@@ -15,13 +15,13 @@ void bfs(map<int, vector<int>>& graph, int startVert, int vertices)
 
 	cout << "bfs alg begins...\n";
 
-	vector<bool> visited(vertices, false);
-	vector<int> distance(vertices, -1);
+	vector<bool> visited(vertices, false); // vektor, hranyashii v sebe informaciyu o tom, posetili mi etu vershinu ili net vo izbezhanii zaciklivaniya
+	vector<int> distance(vertices, -1); // vektor rasstoyanii ot iznachalnoi vershini do kazhdoi vershini grafa
 
 	visited[startVert] = true;
 	distance[startVert] = 0;
 
-	queue<int> visiting;
+	queue<int> visiting; // ochered' dlya poocheryodnoi obrabotki vershin
 	visiting.push(startVert);
 
 	while (visiting.size() != 0)
@@ -32,9 +32,9 @@ void bfs(map<int, vector<int>>& graph, int startVert, int vertices)
 
 		int distanceToCurrent = distance[nextToVisit];
 
-		for (int edg : graph[nextToVisit])
+		for (int edg : graph[nextToVisit]) // dobavlyaem v ochered' smezhnye vershini s tekushei
 		{
-			if (!visited[edg])
+			if (!visited[edg]) // esli vershina ne byla do etogo poseshena
 			{
 				visiting.push(edg);
 				visited[edg] = true;
@@ -60,7 +60,7 @@ void processFile(string path)
 	ifstream graphFile;
 	graphFile.open(path);
 
-	if (!graphFile.is_open())
+	if (!graphFile.is_open())    // Esli ne naideno faila s takim putyom to brosaem oshibku s soobsheniem ob etom
 		throw "File not found!";
 
 	int vertices, edges;
@@ -72,10 +72,10 @@ void processFile(string path)
 	vertices = stoi(verticesSTR);
 	edges = stoi(edgesSTR);
 
-	map<int, vector<int>> graph;
+	map<int, vector<int>> graph; // container hranyashii v sebe sam graf
 
 	string curr_str;
-	for (int i = 0; i < edges; i++)
+	for (int i = 0; i < edges; i++) // prohodimsya po ryobram
 	{
 
 		getline(graphFile, curr_str);
@@ -109,7 +109,7 @@ void processFile(string path)
 
 	try
 	{
-		bfs(graph, stoi(curr_str), vertices);
+		bfs(graph, stoi(curr_str), vertices); // vyzov funkcii poiska v shirinu
 	}
 	catch (...)
 	{
@@ -121,9 +121,9 @@ void processFile(string path)
 
 int main()
 {
-
+	
 	string path;
-	cout << "Enter path to the file: ";
+	cout << "Enter path to the file: ";  // Vvod putya do faila
 	cin >> path;
 
 	try
